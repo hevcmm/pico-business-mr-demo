@@ -141,7 +141,7 @@ void ARemoteXRDemoWorld::Tick(float DeltaSeconds)
                 const FVector HorizontalRight = FRotator(0.0f, Yaw + 90.0f, 0.0f).Vector();
                 MovingTargetOrigin = Position + HorizontalForward * 120.0f;
                 MovingTarget->SetWorldLocation(MovingTargetOrigin);
-                MovingSphereOrigin = MovingTargetOrigin + HorizontalRight * 50.0f + FVector(0.0f, 0.0f, 5.0f);
+                MovingSphereOrigin = MovingTargetOrigin + HorizontalRight * 85.0f + FVector(0.0f, 0.0f, 5.0f);
                 if (MovingSphere)
                 {
                     MovingSphere->SetWorldLocation(MovingSphereOrigin);
@@ -165,7 +165,24 @@ void ARemoteXRDemoWorld::Tick(float DeltaSeconds)
                     FMath::Sin(ElapsedSeconds * 0.32f) * 10.0f,
                     FMath::Sin(ElapsedSeconds * 0.48f) * 16.0f,
                     FMath::Sin(ElapsedSeconds * 0.38f) * 12.0f);
-                MovingSphere->SetWorldLocation(MovingSphereOrigin + SphereOffset);
+                FVector SphereLocation = MovingSphereOrigin + SphereOffset;
+
+                // The rotating 50 cm cube has a roughly 43.3 cm bounding-sphere
+                // radius; the sphere radius is 15 cm. Keep a small extra margin
+                // so their rendered surfaces cannot intersect at any rotation.
+                constexpr float MinimumCenterDistance = 65.0f;
+                const FVector CubeLocation = MovingTarget->GetComponentLocation();
+                FVector Separation = SphereLocation - CubeLocation;
+                const float CenterDistance = Separation.Size();
+                if (CenterDistance < MinimumCenterDistance)
+                {
+                    if (CenterDistance < UE_SMALL_NUMBER)
+                    {
+                        Separation = FVector::RightVector;
+                    }
+                    SphereLocation = CubeLocation + Separation.GetSafeNormal() * MinimumCenterDistance;
+                }
+                MovingSphere->SetWorldLocation(SphereLocation);
             }
             return;
         }
