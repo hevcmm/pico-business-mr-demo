@@ -1,0 +1,10 @@
+**/Binaries/
+**/Intermediate/
+**/Saved/
+**/DerivedDataCache/
+.vs/
+artifacts/
+ue/RemoteXRDemo/Plugins/RemoteXR/
+*.sln.DotSettings.user
+*.log
+

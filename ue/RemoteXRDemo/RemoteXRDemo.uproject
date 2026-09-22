@@ -1,0 +1,14 @@
+{
+  "FileVersion": 3,
+  "EngineAssociation": "5.6",
+  "Category": "XR",
+  "Description": "Minimal mixed-reality cube demo for PICO Business Streaming.",
+  "Modules": [
+    { "Name": "RemoteXRDemo", "Type": "Runtime", "LoadingPhase": "Default" }
+  ],
+  "Plugins": [
+    { "Name": "OpenXR", "Enabled": true },
+    { "Name": "XRBase", "Enabled": true },
+    { "Name": "PicoBusinessMR", "Enabled": true }
+  ]
+}

@@ -1,0 +1,17 @@
+#include "/Engine/Public/Platform.ush"
+
+Texture2D InputTexture;
+SamplerState InputSampler;
+
+void MainPS(noperspective float4 UVAndScreenPos : TEXCOORD0, out float4 OutColor : SV_Target0)
+{
+    const float2 UV = UVAndScreenPos.xy;
+    const float4 Color = InputTexture.Sample(InputSampler, UV);
+    const float Signal = max(Color.r, max(Color.g, Color.b));
+
+    // UE/PICO's inverted-alpha path expects 1 for transparent background and
+    // 0 for opaque content. Rebuild a deterministic mask from the rendered
+    // image so uninitialized/post-process alpha cannot become view-locked dots.
+    const float ObjectCoverage = smoothstep(0.0125, 0.05, Signal);
+    OutColor = float4(Color.rgb, 1.0 - ObjectCoverage);
+}

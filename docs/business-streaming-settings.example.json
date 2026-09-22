@@ -1,0 +1,67 @@
+{
+	"game": {
+		"resolution": "uhd",
+		"bitrate": {
+			"smooth": 20,
+			"sd": 60,
+			"hd": 99,
+			"ultra": 150,
+			"uhd": 150,
+			"uhdplus": 150
+		},
+		"autoBitrate": false,
+		"frameBuffer": true,
+		"codec": "avc",
+		"asw": false,
+		"sharpenRate": 75,
+		"superResolution": false,
+		"gamma": 1,
+		"colorMode": "default",
+		"handTracking": true
+	},
+	"desktop": {
+		"sharpenRate": 0
+	},
+	"video": {
+		"resolution": "sd",
+		"bitrate": {
+			"smooth": 20,
+			"sd": 60,
+			"hd": 100,
+			"ultra": 150,
+			"uhd": 150,
+			"uhdplus": 150
+		},
+		"autoBitrate": false,
+		"refreshRate90Hz": false,
+		"frameBuffer": true,
+		"codec": "hevc",
+		"asw": false,
+		"sharpenRate": 75
+	},
+	"audio": {
+		"mic": true,
+		"volume": 50,
+		"output": "hmd",
+		"latency": 30,
+		"changeDefaultMic": true,
+		"micDenoise": true
+	},
+	"general": {
+		"autoConnect": true,
+		"language": "zh-Hans-CN",
+		"loginItem": false,
+		"closeToTray": true,
+		"defaultStreamMode": "openxr",
+		"autoConnectService": true
+	},
+	"lab": {
+		"quic": false,
+		"faceTrackingMode": 4,
+		"faceTrackingTransferProtocol": 0,
+		"bodyTracking": false,
+		"controllerSensitivity": 50,
+		"superResolution": false,
+		"gamma": 1
+	}
+}

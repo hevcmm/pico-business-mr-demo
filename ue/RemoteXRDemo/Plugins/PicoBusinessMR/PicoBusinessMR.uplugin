@@ -1,0 +1,17 @@
+{
+  "FileVersion": 3,
+  "Version": 1,
+  "VersionName": "0.1.0",
+  "FriendlyName": "PICO Business MR",
+  "Description": "OpenXR passthrough underlay for PICO Business Streaming.",
+  "Category": "XR",
+  "EnabledByDefault": false,
+  "CanContainContent": false,
+  "Plugins": [
+    { "Name": "OpenXR", "Enabled": true },
+    { "Name": "XRBase", "Enabled": true }
+  ],
+  "Modules": [
+    { "Name": "PicoBusinessMR", "Type": "Runtime", "LoadingPhase": "PostConfigInit" }
+  ]
+}
