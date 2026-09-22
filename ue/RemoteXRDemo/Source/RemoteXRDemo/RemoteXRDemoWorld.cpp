@@ -63,6 +63,14 @@ void ARemoteXRDemoWorld::BeginPlay()
             MovingTarget->SetCollisionEnabled(ECollisionEnabled::NoCollision);
             MovingTarget->SetCastShadow(false);
         }
+        MovingSphere = AddShape(TEXT("MrSphere"), TEXT("/Engine/BasicShapes/Sphere.Sphere"),
+            FVector(120.0f, 50.0f, 0.0f), FVector(0.30f),
+            FLinearColor(0.02f, 0.45f, 1.0f), true);
+        if (MovingSphere)
+        {
+            MovingSphere->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+            MovingSphere->SetCastShadow(false);
+        }
         UE_LOG(LogTemp, Display, TEXT("PICO Business Streaming MR scene enabled; waiting for first valid HMD pose"));
         return;
     }
@@ -130,10 +138,17 @@ void ARemoteXRDemoWorld::Tick(float DeltaSeconds)
                 }
                 const float Yaw = Orientation.Rotator().Yaw;
                 const FVector HorizontalForward = FRotator(0.0f, Yaw, 0.0f).Vector();
+                const FVector HorizontalRight = FRotator(0.0f, Yaw + 90.0f, 0.0f).Vector();
                 MovingTargetOrigin = Position + HorizontalForward * 120.0f;
                 MovingTarget->SetWorldLocation(MovingTargetOrigin);
+                MovingSphereOrigin = MovingTargetOrigin + HorizontalRight * 50.0f + FVector(0.0f, 0.0f, 5.0f);
+                if (MovingSphere)
+                {
+                    MovingSphere->SetWorldLocation(MovingSphereOrigin);
+                }
                 bMrTargetAnchored = true;
-                UE_LOG(LogTemp, Display, TEXT("PICO Business MR cube anchored at %s"), *MovingTargetOrigin.ToCompactString());
+                UE_LOG(LogTemp, Display, TEXT("PICO Business MR cube and sphere anchored at %s / %s"),
+                    *MovingTargetOrigin.ToCompactString(), *MovingSphereOrigin.ToCompactString());
             }
         }
         if (bMrMode && !bMrTargetAnchored) return;
@@ -144,6 +159,14 @@ void ARemoteXRDemoWorld::Tick(float DeltaSeconds)
             const FVector Offset(0.0f, FMath::Sin(ElapsedSeconds * 0.65f) * 18.0f,
                 FMath::Sin(ElapsedSeconds * 0.45f) * 8.0f);
             MovingTarget->SetWorldLocation(MovingTargetOrigin + Offset);
+            if (MovingSphere)
+            {
+                const FVector SphereOffset(
+                    FMath::Sin(ElapsedSeconds * 0.32f) * 10.0f,
+                    FMath::Sin(ElapsedSeconds * 0.48f) * 16.0f,
+                    FMath::Sin(ElapsedSeconds * 0.38f) * 12.0f);
+                MovingSphere->SetWorldLocation(MovingSphereOrigin + SphereOffset);
+            }
             return;
         }
         const FVector Offset(0.0, FMath::Sin(ElapsedSeconds) * 100.0, FMath::Sin(ElapsedSeconds * 0.7f) * 30.0f);

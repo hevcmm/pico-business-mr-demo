@@ -27,7 +27,11 @@ private:
     UPROPERTY()
     TObjectPtr<UStaticMeshComponent> MovingTarget;
 
+    UPROPERTY()
+    TObjectPtr<UStaticMeshComponent> MovingSphere;
+
     FVector MovingTargetOrigin = FVector::ZeroVector;
+    FVector MovingSphereOrigin = FVector::ZeroVector;
     float ElapsedSeconds = 0.0f;
     bool bMrMode = false;
     bool bMrTargetAnchored = false;
