@@ -29,10 +29,10 @@ OpenXR passthrough or alpha-blend functionality required by this MR demo.
 
 ## Build
 
-Run from PowerShell:
+Run from Command Prompt or PowerShell:
 
-```powershell
-.\package-demo.ps1
+```bat
+.\package-demo.cmd
 ```
 
 The staged executable is written to:
@@ -43,8 +43,8 @@ artifacts\RemoteXRDemo-Win64\Windows\RemoteXRDemo.exe
 
 You can override the Unreal installation directory:
 
-```powershell
-.\package-demo.ps1 -EngineRoot 'D:\Epic Games\UE_5.6'
+```bat
+.\package-demo.cmd -EngineRoot "D:\Epic Games\UE_5.6"
 ```
 
 ## Run
@@ -53,9 +53,12 @@ You can override the Unreal installation directory:
 2. Keep the codec on AVC/H.264 or HEVC.
 3. Run:
 
-```powershell
-.\run-pico-business-mr.ps1
+```bat
+.\run-pico-business-mr.cmd
 ```
+
+The `.cmd` launchers set PowerShell's execution policy only for their child
+process. They do not change the machine or user policy.
 
 The launcher selects the PICO runtime for the demo process without depending on
 the system-wide OpenXR runtime. A watchdog recreates the OpenXR session after a
@@ -63,4 +66,3 @@ headset reconnect because the tested PICO runtime otherwise loses passthrough.
 
 See [docs/verified-baseline.md](docs/verified-baseline.md) for the accepted
 headset result and critical alpha settings.
-
